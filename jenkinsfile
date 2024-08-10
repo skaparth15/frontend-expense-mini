@@ -1,0 +1,49 @@
+pipeline{
+    agent{
+        label "agent"
+    }
+
+    stages {
+        stage ("listing the frontend files")
+        {
+           steps{
+            sh """
+                ls -ltr
+             """
+           } 
+        }
+
+         stage ("zipping the files")
+
+        {
+           steps{
+            sh """
+                zip -r frontend.zip . -x jenkinsfile 
+             """
+           } 
+        }
+
+        stage ("uploading the frontend code to nexus server"){
+            steps{
+
+                nexusArtifactUploader(
+                nexusVersion: 'nexus3',
+                protocol: 'http',
+                nexusUrl: '3.92.139.59:8081',
+                groupId: 'com.expense',
+                credentialsId: "nexus-cred",
+                repository: 'frontend-expense',
+                artifacts: [
+                    [artifactId: 'frontend',
+                        classifier: '',
+                        file: 'frontend.zip',
+                        type: 'zip']
+                ]
+                )
+            
+
+            }
+        }
+
+    }
+}

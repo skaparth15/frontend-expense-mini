@@ -19,7 +19,7 @@ pipeline{
         {
            steps{
             sh """
-               zip -r frontend.zip . -x jenkinsfile -x .git -x backend.*
+               zip -r frontend.zip . -x jenkinsfile  -x .git  -x backend.*
 
              """
            } 
@@ -34,7 +34,7 @@ pipeline{
                 nexusUrl: '3.92.139.59:8081',
                 groupId: 'com.expense',
                 credentialsId: "nexus-cred",
-                version: '1.0'
+                version: '1.0',
                 repository: 'frontend-expense',
                 artifacts: [
                     [artifactId: 'frontend',

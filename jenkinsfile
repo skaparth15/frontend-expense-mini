@@ -19,8 +19,7 @@ pipeline{
         {
            steps{
             sh """
-               zip -r frontend.zip . -x jenkinsfile  -x .git  -x backend.*
-
+               zip -r frontend.zip * -x jenkinsfile
              """
            } 
         }
@@ -31,7 +30,7 @@ pipeline{
                 nexusArtifactUploader(
                 nexusVersion: 'nexus3',
                 protocol: 'http',
-                nexusUrl: '3.92.139.59:8081',
+                nexusUrl: 'nexus-server.ilovedevops.fun:8081',
                 groupId: 'com.expense',
                 credentialsId: "nexus-cred",
                 version: '1.0',
